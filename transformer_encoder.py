@@ -21,9 +21,10 @@ ids    = [palavra_para_id[p] for p in frase]
 print(f"\nFrase : {frase}")
 print(f"IDs   : {ids}")
 
-# Hiperparâmetros
-d_model = 64    # tamanho do vetor de cada palavra (paper usa 512)
-d_ff    = 256   # tamanho interno da rede FFN      (paper usa 2048)
+# Hiperparâmetros. Decidi utilizar embdedding de 64  e FNN 256 já que é um modelo pequeno
+
+d_model = 64    # tamanho do vetor de cada palavra 
+d_ff    = 256   # tamanho interno da rede FFN      
 
 #Embedding: cada palavra vira um vetor de 64 números
 tabela_embeddings = np.random.randn(tamanho_vocab, d_model) * 0.01
@@ -79,13 +80,7 @@ class RedeNeuralFeedForward:
 
 
 class CamadaEncoder:
-    """
-    Um bloco completo do Encoder. Fluxo:
-      1. Atenção(X)
-      2. LayerNorm(X + resultado)       
-      3. FFN(resultado)
-      4. LayerNorm(resultado + FFN)     
-    """
+    
     def __init__(self, d_model, d_ff):
         self.atencao = MecanismoDeAtencao(d_model)
         self.ffn     = RedeNeuralFeedForward(d_model, d_ff)
